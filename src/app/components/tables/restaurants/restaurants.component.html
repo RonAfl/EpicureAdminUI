@@ -1,0 +1,40 @@
+<div class="table-container">
+    <button class="btn" mat-button (click)="openCreateDialog()">Create</button>
+
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="chef">
+            <mat-header-cell *matHeaderCellDef> The Chef </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.chef}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+            <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+                <img [src]="element.image" width="100" height="100">
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="stars">
+            <mat-header-cell *matHeaderCellDef> Stars </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.stars}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+                <button class="btn" mat-button *ngIf="!element.editing" (click)="deleteRowFromDB(i)">Delete</button>
+                <button class="btn" mat-button (click)="openUpdateDialog(element,'restaurants', 'update')">Update</button>
+            </mat-cell>
+        </ng-container>
+        
+        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

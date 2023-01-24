@@ -1,0 +1,32 @@
+<button class="button-admin" (click)="toggleOpen()">Open AdminUI</button>
+
+<div class="sidebar" [ngClass]="{ 'open': isOpen }">
+  <button class="button-admin" (click)="toggleOpen()">Close AdminUI</button>
+  <nav class="nav-list">
+    <a (click)="onRestaurantsClicked()">Restaurants</a>
+    <a (click)="onChefsClicked()">Chefs</a>
+    <a (click)="onDishesClicked()">Dishes</a><hr class="line-separator">
+    <a (click)="showConfirm()">Log Out</a>
+  </nav>
+</div>
+
+<div id="confirm-logout" style="display:none">
+    <h5>Are you sure you want to log out?</h5>
+    <button (click)="logout()">Yes</button>
+    <button (click)="hideConfirm()">No</button>
+</div>
+
+<div *ngIf="selectedOption === 'restaurants'">
+  <app-restaurants></app-restaurants>
+</div>
+<div *ngIf="selectedOption === 'chefs'">
+  <app-chefs></app-chefs>
+</div>
+<div *ngIf="selectedOption === 'dishes'">
+  <app-dishes></app-dishes>
+</div>
+
+
+
+
+

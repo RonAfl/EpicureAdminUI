@@ -1,0 +1,49 @@
+<div class="table-container">
+    <button class="btn" mat-button (click)="openCreateDialog()">Create</button>
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ingredients">
+            <mat-header-cell *matHeaderCellDef> Ingredients </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.ingredients}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+            <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+            <mat-cell *matCellDef="let element"> 
+                <img [src]="element.image" width="100" height="100">
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="tags">
+            <mat-header-cell *matHeaderCellDef> Tag </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.tags}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="restaurant">
+            <mat-header-cell *matHeaderCellDef> The Restaurant </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.restaurant.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+                <button class="btn" mat-button *ngIf="!element.editing" (click)="deleteRowFromDB(i)">Delete</button>
+                <button class="btn" mat-button (click)="openUpdateDialog(element,'dishes', 'update')">Update</button>
+            </mat-cell>
+        </ng-container>
+        
+        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{data.method}} {{data.tableName}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Chef's name</mat-label>
+    <input matInput [(ngModel)]="data.element.name" placeholder="Name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Chef's Description</mat-label>
+    <input matInput [(ngModel)]="data.element.description" placeholder="Description">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Chefs's Image</mat-label>
+    <input matInput [(ngModel)]="data.element.image" placeholder="Image">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Week Chef</mat-label>
+    <mat-select [(ngModel)]="data.element.weekChef">
+      <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button *ngIf="data.method==='Create'" mat-button (click)="dialogRef.close(data.element)"
+    cdkFocusInitial>Create</button>
+  <button *ngIf="data.method==='update'" mat-button (click)="dialogRef.close(data.element)"
+    cdkFocusInitial>Update</button>
+</div>

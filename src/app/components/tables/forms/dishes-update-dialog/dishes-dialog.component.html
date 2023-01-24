@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>{{data.method}} {{data.tableName}}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Dish's name</mat-label>
+    <input matInput [(ngModel)]="data.element.name" placeholder="Name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Dish's Ingredients</mat-label>
+    <input matInput [(ngModel)]="data.element.ingredients" placeholder="Ingredients">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Dish's Image</mat-label>
+    <input matInput [(ngModel)]="data.element.image" placeholder="Image">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Dish's Price</mat-label>
+    <input matInput [(ngModel)]="data.element.price" placeholder="Price">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Dish's Tags</mat-label>
+    <mat-select [(ngModel)]="data.element.tags">
+      <mat-option *ngFor="let tag of tags" [value]="tag">{{tag}}</mat-option>
+    </mat-select>  </mat-form-field>
+  <!-- add drop down -->
+  <mat-form-field>
+    <mat-label>Dish's Restaurant</mat-label>
+    <mat-select [(ngModel)]="selectedRest">
+      <mat-option *ngFor="let rest of restaurants" [value]="rest.name">{{rest.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button *ngIf="data.method==='Create'" mat-button (click)="onCreate()"
+    cdkFocusInitial>Create</button>
+  <button *ngIf="data.method==='update'" mat-button (click)="onUpdate()"
+    cdkFocusInitial>Update</button>
+</div>
