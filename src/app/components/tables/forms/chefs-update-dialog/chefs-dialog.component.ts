@@ -16,11 +16,10 @@ export class ChefsDialogComponent {
     private chefsService: ChefService)
      {  
         this.selectedOption = data.element.weekChef;
-       
- 
     }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.data.method = 'cancel';
+    this.dialogRef.close(this.data);
   }
 }

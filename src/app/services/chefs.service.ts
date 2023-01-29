@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 export interface Chef {
     _id: string,
@@ -20,24 +20,36 @@ export class ChefService implements OnInit {
     constructor(private http: HttpClient) { }
     ngOnInit(): void { }
 
-    createChef(body:any){
-        this.http.post('http://localhost:3000/api/chefs/', body).subscribe((res)=>{console.log(res);});
+    createChef(body: any, token: string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'token': token
+        })
+        return this.http.post('http://localhost:3000/api/chefs/', body, {headers:headers});
     }
 
     getChefs() {
         return this.http.get<ChefsType>('http://localhost:3000/api/chefs')
     }
 
-    updateChefById(_id:string, body:any){
-         this.http.put(`http://localhost:3000/api/chefs/${_id}`, body).subscribe((res)=>{console.log(res);});
+    updateChefById(_id: string, body: any, token:string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'token': token
+        })
+        this.http.put(`http://localhost:3000/api/chefs/${_id}`, body, {headers:headers}).subscribe((res) => { console.log(res); });
     }
 
-    getChefById(id:string){
+    getChefById(id: string) {
         return this.http.get<ChefsType>(`http://localhost:3000/api/chefs/${id}`);
     }
 
-    deleteChefById(_id:string){
-        this.http.delete(`http://localhost:3000/api/chefs/${_id}` ).subscribe((res)=>{console.log(res);});
+    deleteChefById(_id: string, token:string) {
+        const headers = new HttpHeaders({
+            'Content-Type': 'application/json',
+            'token': token
+        })
+        this.http.delete(`http://localhost:3000/api/chefs/${_id}`, {headers:headers}).subscribe((res) => { console.log(res); });
 
     }
 }

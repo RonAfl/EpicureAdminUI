@@ -1,54 +1,67 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsersService, UsersType } from 'src/app/services/users.service';
+import { UsersService, UsersType, UserType } from 'src/app/services/users.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  isAuthorized: boolean = false;
+  superAuthorized: boolean = false;
+  userAuthorized: boolean = false;
   message: string = '';
   username: string = '';
   password: string = '';
-  users: { username: string, password: string }[] = [];
+  user_info: { user: UserType, accessToken: string } = {
+    user: {
+      _id: '',
+      username: '',
+      password: '',
+      isSuper: false,
+      isDeleted: false
+    }, accessToken: ''
+  };
 
   constructor(private route: Router, private usersService: UsersService) { }
 
   ngOnInit() {
-    this.getUsers();
+    if (localStorage.getItem('admin') || localStorage.getItem('user')) {
+      this.route.navigateByUrl("home-admin");
+    }
   }
 
-  getUsers() {
-    this.usersService.getUsers().subscribe((result) => {
-      this.users = result.map((user) => {
-        return {
-          username: user.username,
-          password: user.password,
+  async getUser(): Promise<void> {
+    return new Promise((resolve) => {
+      this.usersService.getUsers(this.username, this.password).subscribe((result: { user: UserType, accessToken: string }) => {
+        console.log(result);
+
+        if (result) {
+          this.user_info = { user: result.user, accessToken: result.accessToken }
+          resolve();
         }
       })
     });
   }
 
-  checkAuth() {
-    for (let user of this.users) {
-      if (this.username === user.username && this.password === user.password) {
-        return true;
-      }
-    }
-    return false;
-  }
-  onSubmit() {
-    if (this.checkAuth()) {
-      localStorage.setItem("log-in", "admin")
-      this.isAuthorized = true;
+  async onSubmit() {
+    await this.getUser();
+    if (this.user_info.user.isSuper || this.superAuthorized) {
+      localStorage.setItem("admin", this.user_info.accessToken);
+      localStorage.setItem("isSuper", '1');
+      this.superAuthorized = true;
       this.message = '';
       this.route.navigateByUrl("home-admin");
     }
+    else if (!this.user_info.user.isSuper || this.userAuthorized) {
+      localStorage.setItem("user", this.user_info.accessToken);
+      localStorage.setItem("isSuper", '0');
+      this.message = '';
+      this.userAuthorized = true;
+      this.route.navigateByUrl("home-admin");
+    }
     else {
-      this.isAuthorized = false;
-      this.message = 'Unauthorized Login'
-      
+      this.message = 'Unauthorized Login - Not Admin'
     }
   }
 }

@@ -29,17 +29,17 @@ export class RestaurantsDialogComponent implements OnInit {
   onUpdate(){
 
     for(let chef of this.chefs){
-      console.log(1,chef)
-      console.log(this.data.element.chef)
       if(chef.name === this.data.element.chef )
       {
-        this.data.element.chef = chef.id;
-        this.dialogRef.close(this.data.element)
+        this.data.element.chef = chef;
+        this.dialogRef.close(this.data);
       }
     }
+
     return;
   }
   onNoClick(): void {
-    this.dialogRef.close();
+    this.data.method = 'cancel';
+    this.dialogRef.close(this.data);
   }
 }

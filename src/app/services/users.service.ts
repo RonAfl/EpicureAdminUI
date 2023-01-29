@@ -1,14 +1,15 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpHeaders } from '@angular/common/http'
 
 export interface User {
     _id: string,
     username: string,
     password: string,
+    isSuper: boolean,
     isDeleted: boolean
 }
 
-type UserType = User;
+export type UserType = User;
 export type UsersType = UserType[];
 
 @Injectable({
@@ -22,8 +23,13 @@ export class UsersService implements OnInit {
         this.http.post('http://localhost:3000/api/users/', body).subscribe((res)=>{console.log(res);});
     }
 
-    getUsers() {
-        return this.http.get<UsersType>('http://localhost:3000/api/users')
+    getUsers(_username:string,_password:string) {
+        const headers= new HttpHeaders({
+            'Content-Type': 'application/json',
+            'username': _username,
+            'password': _password
+        })
+        return this.http.get<{user:UserType, accessToken:string}>('http://localhost:3000/api/users', {headers:headers});
     }
 
     updateUserById(_id:string, body:any){

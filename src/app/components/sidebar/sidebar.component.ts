@@ -31,26 +31,24 @@ export class SidebarComponent {
 
   logout() {
     this.hideConfirm();
-    localStorage.removeItem('log-in');
+    localStorage.removeItem('user');
+    localStorage.removeItem('admin');
+    localStorage.removeItem('isSuper');
     this.route.navigateByUrl("login");
   }
 
   onRestaurantsClicked(){
     this.selectedOption = 'restaurants';
-    //this.route.navigateByUrl("home-admin/restaurants");
     console.log(this.selectedOption);
 
   }
 
   onChefsClicked(){
-    //this.route.navigateByUrl("chefs-table");
     this.selectedOption = 'chefs';
     console.log(this.selectedOption);
-
   }
 
   onDishesClicked(){
-    //this.route.navigateByUrl("dishes-table");
     this.selectedOption = 'dishes';
     console.log(this.selectedOption);
   }

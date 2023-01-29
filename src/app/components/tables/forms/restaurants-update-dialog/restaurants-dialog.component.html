@@ -24,6 +24,6 @@
 
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button *ngIf="data.method==='Create'" mat-button (click)="dialogRef.close(data.element)" cdkFocusInitial>Create</button>
+  <button *ngIf="data.method==='Create'" mat-button (click)="onUpdate()" cdkFocusInitial>Create</button>
   <button  *ngIf="data.method==='update'" mat-button (click)="onUpdate()" cdkFocusInitial>Update</button>
 </div>

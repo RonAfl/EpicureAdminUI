@@ -26,23 +26,22 @@ export class DishesDialogComponent {
   onCreate() {
     for (let rest of this.restaurants) {
       if (rest.name === this.selectedRest) {
-        this.data.element.restaurant = rest.id;
-        //console.log('left', rest.name, "right", this.selectedRest, 'win', this.data.element.restaurant)
-        this.dialogRef.close(this.data.element);
+        this.data.element.restaurant = rest;
       }
     }
-    this.dialogRef.close()
+    this.dialogRef.close(this.data);
   }
 
   onUpdate() {
     for (let rest of this.restaurants) {
       if (rest.name === this.selectedRest) {
-        this.data.element.restaurant = rest.id;
+        this.data.element.restaurant = rest;
       }
     }
-    this.dialogRef.close(this.data.element)
+    this.dialogRef.close(this.data)
   }
   onNoClick(): void {
-    this.dialogRef.close();
+    this.data.method = 'cancel';
+    this.dialogRef.close(this.data);
   }
 }
